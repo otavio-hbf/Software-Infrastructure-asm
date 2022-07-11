@@ -1,6 +1,13 @@
 org 0x7c00
 jmp 0x0000:start
 
+_const:
+    max_size equ 50
+
+_data:
+    string times max_size db 0
+
+
 _clean:
     xor ax, ax
     mov cx, 0
@@ -69,7 +76,7 @@ _gets:
     ret
 
 _reverse:
-    mov di, si
+    mov si, di
     xor cx, cx
 
     .loop1:
@@ -91,11 +98,14 @@ _reverse:
         jmp .loop2
 
         .endloop2:
+        mov di, 0
         call _printString
 
 start:
     call _clean
+    mov di, string
     call _gets
+    mov di, string
     call _reverse
     jmp end
 
